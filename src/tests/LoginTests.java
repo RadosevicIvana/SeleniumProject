@@ -10,13 +10,13 @@ public class LoginTests extends TestBase{
 	
 	@BeforeMethod
 	public void setup() throws InterruptedException {
-		//driver.navigate().to("https://www.saucedemo.com/index.html");
-		driver.navigate().refresh();
+		driver.navigate().to("http://cms.demo.katalon.com/");
+		Thread.sleep(2000);
 		
 	}
 	@Test 
 	public void working() {
-		driver.navigate().to("https://www.saucedemo.com/index.html");
+		
 	}
 	
 	@AfterMethod
