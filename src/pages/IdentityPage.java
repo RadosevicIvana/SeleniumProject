@@ -11,6 +11,9 @@ public class IdentityPage {
 	WebElement saveButton; 
 	WebElement successfulEditLabel;
 	WebElement currentPasswordField;
+	WebElement profileName; 
+	WebElement backToMyAccount; 
+	 
 
 	public IdentityPage(WebDriver driver) {
 		super();
@@ -39,6 +42,16 @@ public class IdentityPage {
 		return driver.findElement(By.className("alert-success"));
 	}
 
+	
+
+	public WebElement getBackToMyAccount() {
+		return driver.findElement(By.xpath("//*[@id=\"center_column\"]/ul/li[1]/a"));
+	}
+
+	public WebElement getProfileName() {
+		return driver.findElement(By.className("account"));
+	}
+
 	public void inputLastName(String newLastName) {
 		this.getLastNameField().clear();
 		this.getLastNameField().sendKeys(newLastName);
@@ -51,5 +64,6 @@ public class IdentityPage {
 	public void saveButtonClick() {
 		this.getSaveButton().click();
 	}
+	
 	
 }

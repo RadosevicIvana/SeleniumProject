@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.Select;
 
 public class AddressesPage {
 	WebDriver driver;
+	
 	WebElement addANewAddress;
 	WebElement addressField;
 	WebElement cityField;
@@ -122,8 +123,9 @@ public class AddressesPage {
 		this.getSaveButton().click();
 	}
 
-	public void updateAddress(String oldAddress) {
+	public void updateAddress(String oldAddress) throws InterruptedException {
 		this.getAddressField().clear();
+		Thread.sleep(2000);
 		this.inputAddress(oldAddress);
 		this.saveButtonClick();
 	}
@@ -136,7 +138,7 @@ public class AddressesPage {
 		Alert alert = driver.switchTo().alert();
 		alert.accept();
 	}
-	public void assertAddressTwoNotPresent() {
+	public void assertAddressTwoPresent() {
 		List<WebElement> dynamicElement = driver.findElements(By.xpath("//div[@class='addresses']/div/div[2]/ul/li/h3"));
 		if(dynamicElement.size() != 0){
 			 System.out.println("Element present");
@@ -145,4 +147,15 @@ public class AddressesPage {
 			 System.out.println("Element not present");
 			}
 	}
+	
+	public void addNewAddress(String address, String city, int index, String postalCode, String phoneNumber, String addressTitle) {
+		this.inputAddress(address);
+		this.inputCity(city);
+		this.chooseState(11);
+		this.inputPostalCode(postalCode);
+		this.inputPhoneNumber(phoneNumber);
+		this.inputAddressTitle(addressTitle);
+		this.saveNewAddressClick();
+	}
+	
 }

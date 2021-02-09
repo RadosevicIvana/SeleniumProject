@@ -19,6 +19,7 @@ public class TestBase {
 	WebDriver driver;
 	XSSFWorkbook wb;
 	ExcelReader excelReader;
+	//Pages
 	HomePage homePage; 
 	MyAccountPage myAccountPage; 
 	AddressesPage addressesPage; 
@@ -44,7 +45,7 @@ public class TestBase {
 		this.myWishlistPage = new MyWishListPage(driver);
 	
 
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 	}
 	

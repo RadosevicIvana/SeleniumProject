@@ -1,5 +1,6 @@
 package tests;
 
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -10,37 +11,37 @@ public class MyAccountTests extends TestBase {
 	public void setup() {
 
 		driver.navigate().to("http://automationpractice.com/index.php");
+		String email = excelReader.getData("TC1", 4, 8);
+		String password = excelReader.getData("TC1", 4, 9);
+		logIn(email, password);
 
 	}
 
 
-	@Test(priority = 0)
+	//@Test(priority = 0)
 
-	public void updateAddress() {
-		String email = excelReader.getData("TC1", 4, 8);
-		String password = excelReader.getData("TC1", 4, 9);
-		logIn(email, password);
+	public void updateAddress() throws InterruptedException {
+		
 		myAccountPage.addressesTabClick();
 		addressesPage.updateButtonClick();
+		String oldAddress = addressesPage.getAddressField().getText();
+		addressesPage.getAddressField().clear();
 		String newAddress = excelReader.getData("TC2", 4, 6);
-
 		addressesPage.getAddressField().clear();
 		addressesPage.inputAddress(newAddress);
+		Thread.sleep(2000);
 		addressesPage.saveButtonClick();
-		excelReader.asserting("TC2", 5, 7, addressesPage.getAddressLabel().getText());
-
+		Assert.assertEquals(addressesPage.getAddressLabel().getText(), newAddress);
+		
 		addressesPage.updateButtonClick();
-		String oldAddress = excelReader.getData("TC2", 4, 9);
 		addressesPage.updateAddress(oldAddress);
-		excelReader.asserting("TC2", 5, 10, addressesPage.getAddressLabel().getText());
+		Assert.assertEquals(addressesPage.getAddressLabel(), oldAddress);
 
 	}
 
 	@Test (priority = 2)
 	public void AddAddress() {
-		String email = excelReader.getData("TC1", 4, 8);
-		String password = excelReader.getData("TC1", 4, 9);
-		logIn(email, password);
+		
 		myAccountPage.addressesTabClick();
 		addressesPage.addNewAddressClick();
 
@@ -50,26 +51,18 @@ public class MyAccountTests extends TestBase {
 		String phoneNumber = excelReader.getData("TC2", 4, 20);
 		String addressTitle = excelReader.getData("TC2", 4, 21);
 
-		addressesPage.inputAddress(address);
-		addressesPage.inputCity(city);
-		addressesPage.chooseState(11);
-		addressesPage.inputPostalCode(postalCode);
-		addressesPage.inputPhoneNumber(phoneNumber);
-		addressesPage.inputAddressTitle(addressTitle);
-		addressesPage.saveNewAddressClick();
-		excelReader.asserting("TC2", 5, 22, addressesPage.getAddressTwoLabel().getText());
+		addressesPage.addNewAddress(address, city, 11, postalCode, phoneNumber, addressTitle);
+		addressesPage.assertAddressTwoPresent();
 
 	}
 
 	@Test (priority = 4)
 	public void deleteAddress() throws InterruptedException {
-		String email = excelReader.getData("TC1", 4, 8);
-		String password = excelReader.getData("TC1", 4, 9);
-		logIn(email, password);
+		
 		myAccountPage.addressesTabClick();
 		addressesPage.deleteAddressButtonClick();
 		addressesPage.alert();
-		addressesPage.assertAddressTwoNotPresent();
+		addressesPage.assertAddressTwoPresent();
 
 	}
 

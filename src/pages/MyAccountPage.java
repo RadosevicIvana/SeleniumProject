@@ -10,16 +10,16 @@ import org.testng.Assert;
 public class MyAccountPage {
 
 	WebDriver driver;
+	
+	WebElement myAddressesTab;
+	WebElement myWishListTab; 
+	WebElement myPersonalInformationTab;
 	WebElement emailField;
 	WebElement passwordField;
 	WebElement signInButton;
 	WebElement signOutButton;
 	WebElement credentialsWrongInput; 
-	WebElement myAddressesTab; 
-	WebElement myPersonalInformationTab; 
-	WebElement myWishListTab; 
-	
-
+	 
 
 	public MyAccountPage(WebDriver driver) {
 		super();
@@ -49,7 +49,7 @@ public class MyAccountPage {
 	
 
 	public WebElement getCredentialsWrongInput() {
-		return driver.findElement(By.xpath("//*[@id=\"center_column\"]/div[1]/p"));
+		return driver.findElement(By.className("alert-danger"));
 	}
 	
 
@@ -57,7 +57,6 @@ public class MyAccountPage {
 		return driver.findElement(By.xpath("//a[@title=\"Addresses\"]"));
 		
 	}
-	
 	
 	public WebElement getMyPersonalInformationTab() {
 		return driver.findElement(By.xpath("//a[@title=\"Information\"]"));
@@ -96,7 +95,6 @@ public class MyAccountPage {
 	public void myPersonalInformationTabClick() {
 		this.getMyPersonalInformationTab().click();
 	}
-	
 	public void myWishListTabClick() {
 		this.getMyWishListTab().click();
 	}

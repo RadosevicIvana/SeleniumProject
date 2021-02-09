@@ -30,7 +30,6 @@ public class LoginTests extends TestBase {
 
 		homePage.signInClick();
 		myAccountPage.loginInput(email, password);
-		myAccountPage.signInButtonClick();
 		excelReader.asserting("TC1", 5, 20, myAccountPage.getCredentialsWrongInput().getText());
 
 	}
@@ -42,7 +41,6 @@ public class LoginTests extends TestBase {
 
 		homePage.signInClick();
 		myAccountPage.loginInput(email, password);
-		myAccountPage.signInButtonClick();
 		excelReader.asserting("TC1", 5, 30, myAccountPage.getCredentialsWrongInput().getText());
 	}
 
