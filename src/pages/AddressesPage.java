@@ -1,5 +1,8 @@
 package pages;
 
+import java.util.List;
+
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,6 +21,7 @@ public class AddressesPage {
 	WebElement addressTwoLabel;
 	WebElement updateButton;
 	WebElement addressLabel;
+	WebElement deleteAddressButton;
 
 	public AddressesPage(WebDriver driver) {
 		super();
@@ -41,7 +45,7 @@ public class AddressesPage {
 	}
 
 	public WebElement getStateField() {
-		return driver.findElement(By.id("id_country"));
+		return driver.findElement(By.id("id_state"));
 	}
 
 	public WebElement getPostalCodeField() {
@@ -61,9 +65,8 @@ public class AddressesPage {
 	}
 
 	public WebElement getAddressTwoLabel() {
-		return driver.findElement(By.xpath("//*[@id=\"center_column\"]/div[1]/div/div[2]/ul/li[1]/h3"));
+		return driver.findElement(By.xpath("//div[@class='addresses']/div/div[2]/ul/li/h3"));
 	}
-	
 
 	public WebElement getUpdateButton() {
 		return driver.findElement(By.xpath("//*[@id=\"center_column\"]/div[1]/div/div/ul/li[9]/a[1]"));
@@ -73,19 +76,21 @@ public class AddressesPage {
 		return driver.findElement(By.className("address_address1"));
 	}
 
+	public WebElement getDeleteAddressButton() {
+		return driver.findElement(By.xpath("//*[@id=\"center_column\"]/div[1]/div/div[2]/ul/li[9]/a[2]"));
+	}
+
 	public void updateButtonClick() {
 		this.getUpdateButton().click();
 	}
-	
-	
+
 	public void saveButtonClick() {
 		this.getSaveButton().click();
 	}
-	
+
 	public void addNewAddressClick() {
 		this.getAddANewAddress().click();
 	}
-	
 
 	public void inputAddress(String address) {
 		this.getAddressField().sendKeys(address);
@@ -95,9 +100,9 @@ public class AddressesPage {
 		this.getCityField().sendKeys(city);
 	}
 
-	public void chooseState(String state) {
-		Select drpState = new Select(this.getStateField());
-		drpState.selectByVisibleText(state);
+	public void chooseState(int index) {
+		Select stateFromDropDown = new Select(getStateField());
+		stateFromDropDown.selectByIndex(index);
 	}
 
 	public void inputPostalCode(String postalCode) {
@@ -109,11 +114,35 @@ public class AddressesPage {
 	}
 
 	public void inputAddressTitle(String addressTitle) {
+		this.getAddressTitleField().clear();
 		this.getAddressTitleField().sendKeys(addressTitle);
 	}
 
-	public void saveNewAddress() {
+	public void saveNewAddressClick() {
 		this.getSaveButton().click();
 	}
-	
+
+	public void updateAddress(String oldAddress) {
+		this.getAddressField().clear();
+		this.inputAddress(oldAddress);
+		this.saveButtonClick();
+	}
+
+	public void deleteAddressButtonClick() {
+		this.getDeleteAddressButton().click();
+	}
+
+	public void alert() {
+		Alert alert = driver.switchTo().alert();
+		alert.accept();
+	}
+	public void assertAddressTwoNotPresent() {
+		List<WebElement> dynamicElement = driver.findElements(By.xpath("//div[@class='addresses']/div/div[2]/ul/li/h3"));
+		if(dynamicElement.size() != 0){
+			 System.out.println("Element present");
+			}
+			else{
+			 System.out.println("Element not present");
+			}
+	}
 }

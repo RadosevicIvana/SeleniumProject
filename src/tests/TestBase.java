@@ -11,7 +11,9 @@ import org.testng.annotations.BeforeClass;
 
 import pages.AddressesPage;
 import pages.HomePage;
+import pages.IdentityPage;
 import pages.MyAccountPage;
+import pages.MyWishListPage;
 public class TestBase {
 
 	WebDriver driver;
@@ -20,7 +22,14 @@ public class TestBase {
 	HomePage homePage; 
 	MyAccountPage myAccountPage; 
 	AddressesPage addressesPage; 
+	IdentityPage identityPage;
+	MyWishListPage myWishlistPage;
 
+
+	public void logIn(String email, String password) {
+		homePage.signInClick();
+		myAccountPage.loginInput(email, password);
+	}
 	@BeforeClass
 	public void preKlase() throws IOException {
 
@@ -31,10 +40,14 @@ public class TestBase {
 		this.homePage = new HomePage(driver);
 		this.myAccountPage = new MyAccountPage(driver);
 		this.addressesPage = new AddressesPage(driver);
+		this.identityPage = new IdentityPage(driver);
+		this.myWishlistPage = new MyWishListPage(driver);
+	
 
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 	}
+	
 
 	@AfterClass
 	public void posleKlase() throws IOException {

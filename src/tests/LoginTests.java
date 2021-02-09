@@ -12,44 +12,52 @@ public class LoginTests extends TestBase {
 
 	}
 
-	@Test (priority = 0)
+	@Test(priority = 0)
 	public void successfulLogin() {
-		String username = excelReader.getData("TC1", 4, 8);
+		String email = excelReader.getData("TC1", 4, 8);
 		String password = excelReader.getData("TC1", 4, 9);
 
 		homePage.signInClick();
-		myAccountPage.inputUsername(username);
-		myAccountPage.inputPassword(password);
-		myAccountPage.signInButtonClick();
+		myAccountPage.loginInput(email, password);
 		myAccountPage.assertSuccessfulLogin();
 
 	}
 
-	@Test (priority = 2)
-	public void invlidCredentialsLogin() {
-		String username = excelReader.getData("TC1", 4, 18);
+	@Test(priority = 2)
+	public void invlidEmailLogin() {
+		String email = excelReader.getData("TC1", 4, 18);
 		String password = excelReader.getData("TC1", 4, 19);
 
 		homePage.signInClick();
-		myAccountPage.inputUsername(username);
-		myAccountPage.inputPassword(password);
+		myAccountPage.loginInput(email, password);
 		myAccountPage.signInButtonClick();
 		excelReader.asserting("TC1", 5, 20, myAccountPage.getCredentialsWrongInput().getText());
 
 	}
 
 	@Test(priority = 4)
-	public void noInputLogin() {
+	public void invalidPasswordLogin() {
+		String email = excelReader.getData("TC1", 4, 28);
+		String password = excelReader.getData("TC1", 4, 29);
 
 		homePage.signInClick();
-		myAccountPage.getUsernameField().clear();
-		myAccountPage.getPasswordField().clear();
+		myAccountPage.loginInput(email, password);
 		myAccountPage.signInButtonClick();
-		excelReader.asserting("TC1", 5, 28, myAccountPage.getCredentialsWrongInput().getText());
-
+		excelReader.asserting("TC1", 5, 30, myAccountPage.getCredentialsWrongInput().getText());
 	}
 
 	@Test(priority = 6)
+	public void noInputLogin() {
+
+		homePage.signInClick();
+		myAccountPage.getEmailField().clear();
+		myAccountPage.getPasswordField().clear();
+		myAccountPage.signInButtonClick();
+		excelReader.asserting("TC1", 5, 46, myAccountPage.getCredentialsWrongInput().getText());
+
+	}
+
+	@Test(priority = 8)
 	public void successfulLogOut() {
 		successfulLogin();
 		myAccountPage.signOutButtonClick();
@@ -58,10 +66,10 @@ public class LoginTests extends TestBase {
 	}
 
 	@AfterMethod
-	public void afterTest(){
+	public void afterTest() {
 		driver.manage().deleteAllCookies();
 		driver.navigate().refresh();
-		
+
 	}
 
 }

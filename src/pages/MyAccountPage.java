@@ -6,26 +6,32 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
+
 public class MyAccountPage {
 
 	WebDriver driver;
-	WebElement usernameField;
+	WebElement emailField;
 	WebElement passwordField;
 	WebElement signInButton;
 	WebElement signOutButton;
 	WebElement credentialsWrongInput; 
 	WebElement myAddressesTab; 
+	WebElement myPersonalInformationTab; 
+	WebElement myWishListTab; 
+	
+
 
 	public MyAccountPage(WebDriver driver) {
 		super();
 		this.driver = driver;
+		
 	}
 
 	public WebDriver getDriver() {
 		return driver;
 	}
 
-	public WebElement getUsernameField() {
+	public WebElement getEmailField() {
 		return driver.findElement(By.id("email"));
 	}
 
@@ -48,17 +54,27 @@ public class MyAccountPage {
 	
 
 	public WebElement getMyAddressesTab() {
-		return driver.findElement(By.xpath("//*[@id=\"center_column\"]/div/div[1]/ul/li[3]/a"));
+		return driver.findElement(By.xpath("//a[@title=\"Addresses\"]"));
+		
+	}
+	
+	
+	public WebElement getMyPersonalInformationTab() {
+		return driver.findElement(By.xpath("//a[@title=\"Information\"]"));
+	}
+	
+
+	public WebElement getMyWishListTab() {
+		return driver.findElement(By.xpath("//a[@title=\"My wishlists\"]"));
 	}
 
-	public void inputUsername(String username) {
-		this.getUsernameField().clear();
-		this.getUsernameField().sendKeys(username);
-	}
-
-	public void inputPassword(String password) {
+	public void loginInput(String email, String password) {
+		this.getEmailField().clear();
+		this.getEmailField().sendKeys(email);
 		this.getPasswordField().clear();
 		this.getPasswordField().sendKeys(password);
+		this.getSignInButton().click();
+		
 	}
 
 	public void signInButtonClick() {
@@ -76,5 +92,12 @@ public class MyAccountPage {
 	}
 	public void addressesTabClick() {
 		this.getMyAddressesTab().click();
+	}
+	public void myPersonalInformationTabClick() {
+		this.getMyPersonalInformationTab().click();
+	}
+	
+	public void myWishListTabClick() {
+		this.getMyWishListTab().click();
 	}
 }
