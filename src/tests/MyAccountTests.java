@@ -21,13 +21,12 @@ public class MyAccountTests extends TestBase {
 	//@Test(priority = 0)
 
 	public void updateAddress() throws InterruptedException {
-		
-		myAccountPage.addressesTabClick();
+		editAddress();
+		/*myAccountPage.addressesTabClick();
 		addressesPage.updateButtonClick();
 		String oldAddress = addressesPage.getAddressField().getText();
 		addressesPage.getAddressField().clear();
 		String newAddress = excelReader.getData("TC2", 4, 6);
-		addressesPage.getAddressField().clear();
 		addressesPage.inputAddress(newAddress);
 		Thread.sleep(2000);
 		addressesPage.saveButtonClick();
@@ -35,7 +34,7 @@ public class MyAccountTests extends TestBase {
 		
 		addressesPage.updateButtonClick();
 		addressesPage.updateAddress(oldAddress);
-		Assert.assertEquals(addressesPage.getAddressLabel(), oldAddress);
+		Assert.assertEquals(addressesPage.getAddressLabel(), oldAddress);*/
 
 	}
 
@@ -51,13 +50,13 @@ public class MyAccountTests extends TestBase {
 		String phoneNumber = excelReader.getData("TC2", 4, 20);
 		String addressTitle = excelReader.getData("TC2", 4, 21);
 
-		addressesPage.addNewAddress(address, city, 11, postalCode, phoneNumber, addressTitle);
+		addNewAddress(address, city, 11, postalCode, phoneNumber, addressTitle);
 		addressesPage.assertAddressTwoPresent();
 
 	}
 
-	@Test (priority = 4)
-	public void deleteAddress() throws InterruptedException {
+	//@Test (priority = 4)
+	public void removeAddress() throws InterruptedException {
 		
 		myAccountPage.addressesTabClick();
 		addressesPage.deleteAddressButtonClick();
@@ -66,6 +65,43 @@ public class MyAccountTests extends TestBase {
 
 	}
 
+	public void editAddress() {
+		myAccountPage.addressesTabClick();
+		String currentAddress = addressesPage.getAddressLabel().getText();
+		
+		switch (currentAddress) {
+		case "Main street 165": {
+			addressesPage.updateButtonClick();
+			addressesPage.getAddressField().clear();
+			String newAddress = excelReader.getData("TC2", 4, 9);
+			addressesPage.inputAddress(newAddress);
+			addressesPage.saveButtonClick();
+			Assert.assertEquals(addressesPage.getAddressLabel().getText(), newAddress);
+		}
+		break;
+		case "Green Street 185": {
+			addressesPage.updateButtonClick();
+			addressesPage.getAddressField().clear();
+			String newAddress = excelReader.getData("TC2", 4, 6);
+			addressesPage.inputAddress(newAddress);
+			addressesPage.saveButtonClick();
+			Assert.assertEquals(addressesPage.getAddressLabel().getText(), newAddress);
+		}
+		break;
+		default:
+			System.out.println("Adress field is not present");
+		}
+	}
+		public void addNewAddress(String address, String city, int index, String postalCode, String phoneNumber, String addressTitle) {
+			addressesPage.inputAddress(address);
+			addressesPage.inputCity(city);
+			addressesPage.chooseState(11);
+			addressesPage.inputPostalCode(postalCode);
+			addressesPage.inputPhoneNumber(phoneNumber);
+			addressesPage.inputAddressTitle(addressTitle);
+			addressesPage.saveNewAddressClick();
+		}
+	
 	@AfterMethod
 	public void afterTest() throws InterruptedException {
 		driver.manage().deleteAllCookies();

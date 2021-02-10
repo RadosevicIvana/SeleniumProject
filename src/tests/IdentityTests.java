@@ -20,20 +20,47 @@ public class IdentityTests extends TestBase {
 	
 	@Test (priority = 0)
 	public void editPersonalInformation() {
+		editPersonal();
 		
-		myAccountPage.myPersonalInformationTabClick();
+		/*myAccountPage.myPersonalInformationTabClick();
 		String newLastName = excelReader.getData("TC3", 4, 5);
 		String currentPassword = excelReader.getData("TC3", 4, 6);
 		identityPage.inputLastName(newLastName);
 		identityPage.inputCurrentPassword(currentPassword);
 		identityPage.saveButtonClick();
 		Assert.assertEquals(true, identityPage.getSuccessfulEditLabel().isDisplayed());
-		excelReader.asserting("TC3", 5, 7, identityPage.getProfileName().getText());
+		excelReader.asserting("TC3", 5, 7, identityPage.getProfileName().getText());*/
 		
 		
-		
-		
-		
+	}
+	public void editPersonal() {
+		String profileName = identityPage.getProfileName().getText();
+		switch (profileName) {
+		case "Sandy Bell": {
+			myAccountPage.myPersonalInformationTabClick();
+			String newLastName = excelReader.getData("TC3", 4, 5);
+			String currentPassword = excelReader.getData("TC3", 4, 6);
+			identityPage.inputLastName(newLastName);
+			identityPage.inputCurrentPassword(currentPassword);
+			identityPage.saveButtonClick();
+			Assert.assertEquals(true, identityPage.getSuccessfulEditLabel().isDisplayed());
+			excelReader.asserting("TC3", 5, 7, identityPage.getProfileName().getText());
+		}
+		break;
+		case "Sandy Maven": {
+			myAccountPage.myPersonalInformationTabClick();
+			String newLastName = excelReader.getData("TC3", 4, 4);
+			String currentPassword = excelReader.getData("TC3", 4, 6);
+			identityPage.inputLastName(newLastName);
+			identityPage.inputCurrentPassword(currentPassword);
+			identityPage.saveButtonClick();
+			Assert.assertEquals(true, identityPage.getSuccessfulEditLabel().isDisplayed());
+			excelReader.asserting("TC3", 5, 4, identityPage.getProfileName().getText());
+		}
+		break;
+		default:
+			System.out.println("You are not signed in");
+		}
 	}
 	
 	@AfterMethod

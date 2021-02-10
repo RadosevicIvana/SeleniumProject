@@ -139,23 +139,13 @@ public class AddressesPage {
 		alert.accept();
 	}
 	public void assertAddressTwoPresent() {
-		List<WebElement> dynamicElement = driver.findElements(By.xpath("//div[@class='addresses']/div/div[2]/ul/li/h3"));
+		List<WebElement> dynamicElement = driver.findElements(By.cssSelector("ul.last_item"));
 		if(dynamicElement.size() != 0){
 			 System.out.println("Element present");
 			}
 			else{
 			 System.out.println("Element not present");
 			}
-	}
-	
-	public void addNewAddress(String address, String city, int index, String postalCode, String phoneNumber, String addressTitle) {
-		this.inputAddress(address);
-		this.inputCity(city);
-		this.chooseState(11);
-		this.inputPostalCode(postalCode);
-		this.inputPhoneNumber(phoneNumber);
-		this.inputAddressTitle(addressTitle);
-		this.saveNewAddressClick();
 	}
 	
 }

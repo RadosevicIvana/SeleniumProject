@@ -42,8 +42,6 @@ public class IdentityPage {
 		return driver.findElement(By.className("alert-success"));
 	}
 
-	
-
 	public WebElement getBackToMyAccount() {
 		return driver.findElement(By.xpath("//*[@id=\"center_column\"]/ul/li[1]/a"));
 	}
