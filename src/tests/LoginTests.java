@@ -1,5 +1,6 @@
 package tests;
 
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -14,34 +15,34 @@ public class LoginTests extends TestBase {
 
 	@Test(priority = 0)
 	public void successfulLogin() {
-		String email = excelReader.getData("TC1", 4, 8);
-		String password = excelReader.getData("TC1", 4, 9);
+		String email = excelReader.getData("Login", 4, 8);
+		String password = excelReader.getData("Login", 4, 9);
 
 		homePage.signInClick();
-		myAccountPage.loginInput(email, password);
-		myAccountPage.assertSuccessfulLogin();
+		loginInput(email, password);
+		Assert.assertEquals(true, myAccountPage.getSignOutButton().isDisplayed());
 
 	}
 
 	@Test(priority = 2)
 	public void invlidEmailLogin() {
-		String email = excelReader.getData("TC1", 4, 18);
-		String password = excelReader.getData("TC1", 4, 19);
+		String email = excelReader.getData("Login", 4, 18);
+		String password = excelReader.getData("Login", 4, 19);
 
 		homePage.signInClick();
-		myAccountPage.loginInput(email, password);
-		excelReader.asserting("TC1", 5, 20, myAccountPage.getCredentialsWrongInput().getText());
+		loginInput(email, password);
+		Assert.assertEquals(true, myAccountPage.getCredentialsWrongInput().isDisplayed());
 
 	}
 
 	@Test(priority = 4)
 	public void invalidPasswordLogin() {
-		String email = excelReader.getData("TC1", 4, 28);
-		String password = excelReader.getData("TC1", 4, 29);
+		String email = excelReader.getData("Login", 4, 28);
+		String password = excelReader.getData("Login", 4, 29);
 
 		homePage.signInClick();
-		myAccountPage.loginInput(email, password);
-		excelReader.asserting("TC1", 5, 30, myAccountPage.getCredentialsWrongInput().getText());
+		loginInput(email, password);
+		Assert.assertEquals(true, myAccountPage.getCredentialsWrongInput().isDisplayed());
 	}
 
 	@Test(priority = 6)
@@ -51,7 +52,7 @@ public class LoginTests extends TestBase {
 		myAccountPage.getEmailField().clear();
 		myAccountPage.getPasswordField().clear();
 		myAccountPage.signInButtonClick();
-		excelReader.asserting("TC1", 5, 46, myAccountPage.getCredentialsWrongInput().getText());
+		Assert.assertEquals(true, myAccountPage.getCredentialsWrongInput().isDisplayed());
 
 	}
 
@@ -59,8 +60,17 @@ public class LoginTests extends TestBase {
 	public void successfulLogOut() {
 		successfulLogin();
 		myAccountPage.signOutButtonClick();
-		myAccountPage.assertSuccessfulLogOut();
+		Assert.assertEquals(true, myAccountPage.getSignInButton().isDisplayed());
 
+	}
+	
+	public void loginInput(String email, String password) {
+		myAccountPage.getEmailField().clear();
+		myAccountPage.getEmailField().sendKeys(email);
+		myAccountPage.getPasswordField().clear();
+		myAccountPage.getPasswordField().sendKeys(password);
+		myAccountPage.getSignInButton().click();
+		
 	}
 
 	@AfterMethod

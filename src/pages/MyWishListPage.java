@@ -1,6 +1,6 @@
 package pages;
 
-import java.util.List;
+
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -51,23 +51,7 @@ public class MyWishListPage {
 		this.getDeleteButton().click();
 	}
 
-	public void assertTheFirstWishlist() {
-		List<WebElement> dynamicElement = driver.findElements(By.className("mywishlist_first"));
-		if (dynamicElement.size() != 0) {
-			System.out.println("Element present");
-		} else {
-			System.out.println("Element not present");
-		}
-	}
-
-	public void assertTheSecondWishList() {
-		List<WebElement> dynamicElement = driver.findElements(By.className("mywishlist_second"));
-		if (dynamicElement.size() != 0) {
-			System.out.println("Element present");
-		} else {
-			System.out.println("Element not present");
-		}
-	}
+	
 
 	public void alertMessage() {
 		Alert alert = driver.switchTo().alert();

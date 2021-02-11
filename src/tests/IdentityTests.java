@@ -13,8 +13,8 @@ public class IdentityTests extends TestBase {
 	public void setup() {
 
 		driver.navigate().to("http://automationpractice.com/index.php");
-		String email = excelReader.getData("TC1", 4, 8);
-		String password = excelReader.getData("TC1", 4, 9);
+		String email = excelReader.getData("Login", 4, 8);
+		String password = excelReader.getData("Login", 4, 9);
 		logIn(email, password);
 	}
 	
@@ -38,28 +38,28 @@ public class IdentityTests extends TestBase {
 		switch (profileName) {
 		case "Sandy Bell": {
 			myAccountPage.myPersonalInformationTabClick();
-			String newLastName = excelReader.getData("TC3", 4, 5);
-			String currentPassword = excelReader.getData("TC3", 4, 6);
+			String newLastName = excelReader.getData("MyPersonalInformation", 4, 5);
+			String currentPassword = excelReader.getData("Login", 4, 9);
 			identityPage.inputLastName(newLastName);
 			identityPage.inputCurrentPassword(currentPassword);
 			identityPage.saveButtonClick();
 			Assert.assertEquals(true, identityPage.getSuccessfulEditLabel().isDisplayed());
-			excelReader.asserting("TC3", 5, 7, identityPage.getProfileName().getText());
+			excelReader.asserting("MyPersonalInformation", 5, 7, identityPage.getProfileName().getText());
 		}
 		break;
 		case "Sandy Maven": {
 			myAccountPage.myPersonalInformationTabClick();
-			String newLastName = excelReader.getData("TC3", 4, 4);
-			String currentPassword = excelReader.getData("TC3", 4, 6);
+			String newLastName = excelReader.getData("MyPersonalInformation", 4, 4);
+			String currentPassword = excelReader.getData("Login", 4, 9);
 			identityPage.inputLastName(newLastName);
 			identityPage.inputCurrentPassword(currentPassword);
 			identityPage.saveButtonClick();
 			Assert.assertEquals(true, identityPage.getSuccessfulEditLabel().isDisplayed());
-			excelReader.asserting("TC3", 5, 4, identityPage.getProfileName().getText());
+			excelReader.asserting("MyPersonalInformation", 5, 4, identityPage.getProfileName().getText());
 		}
 		break;
 		default:
-			System.out.println("You are not signed in");
+			System.out.println("Error. You are not signed in or the profile is not right");
 		}
 	}
 	
