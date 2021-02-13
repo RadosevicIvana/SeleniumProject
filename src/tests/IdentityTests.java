@@ -21,7 +21,7 @@ public class IdentityTests extends TestBase {
 
 		myAccountPage.myPersonalInformationTabClick();
 		String newLastName = excelReader.getData("MyPersonalInformation", 4, 5);
-		String currentPassword = excelReader.getData("Login", 4, 9);
+		String currentPassword = excelReader.getData("MyPersonalInformation", 4, 6);
 		identityPage.inputLastName(newLastName);
 		identityPage.inputCurrentPassword(currentPassword);
 		identityPage.saveButtonClick();
@@ -42,7 +42,7 @@ public class IdentityTests extends TestBase {
 		identityPage.backToMyAccountClick();
 		myAccountPage.myPersonalInformationTabClick();
 		String oldLastName = excelReader.getData("MyPersonalInformation", 4, 4);
-		String currentPassword = excelReader.getData("Login", 4, 9);
+		String currentPassword = excelReader.getData("MyPersonalInformation", 4, 6);
 		identityPage.inputLastName(oldLastName);
 		identityPage.inputCurrentPassword(currentPassword);
 		identityPage.saveButtonClick();
