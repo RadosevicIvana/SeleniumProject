@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
@@ -14,23 +15,25 @@ import pages.HomePage;
 import pages.IdentityPage;
 import pages.MyAccountPage;
 import pages.MyWishListPage;
+
 public class TestBase {
 
 	WebDriver driver;
 	XSSFWorkbook wb;
 	ExcelReader excelReader;
-	//Pages
-	HomePage homePage; 
-	MyAccountPage myAccountPage; 
-	AddressesPage addressesPage; 
+	WebDriverWait waiter;
+	// Pages
+	HomePage homePage;
+	MyAccountPage myAccountPage;
+	AddressesPage addressesPage;
 	IdentityPage identityPage;
 	MyWishListPage myWishlistPage;
-
 
 	public void logIn(String email, String password) {
 		homePage.signInClick();
 		myAccountPage.loginInput(email, password);
 	}
+
 	@BeforeClass
 	public void preKlase() throws IOException {
 
@@ -43,12 +46,11 @@ public class TestBase {
 		this.addressesPage = new AddressesPage(driver);
 		this.identityPage = new IdentityPage(driver);
 		this.myWishlistPage = new MyWishListPage(driver);
-	
+		this.waiter = new WebDriverWait(driver, 40);
 
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 	}
-	
 
 	@AfterClass
 	public void posleKlase() throws IOException {

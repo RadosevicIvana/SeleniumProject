@@ -63,20 +63,20 @@ public class LoginTests extends TestBase {
 		Assert.assertEquals(true, myAccountPage.getSignInButton().isDisplayed());
 
 	}
-	
+
+	@AfterMethod
+	public void afterTest() {
+		driver.manage().deleteAllCookies();
+		driver.navigate().refresh();
+
+	}
+
 	public void loginInput(String email, String password) {
 		myAccountPage.getEmailField().clear();
 		myAccountPage.getEmailField().sendKeys(email);
 		myAccountPage.getPasswordField().clear();
 		myAccountPage.getPasswordField().sendKeys(password);
 		myAccountPage.getSignInButton().click();
-		
-	}
-
-	@AfterMethod
-	public void afterTest() {
-		driver.manage().deleteAllCookies();
-		driver.navigate().refresh();
 
 	}
 

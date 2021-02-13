@@ -1,5 +1,6 @@
 package pages;
 
+
 import java.util.List;
 
 import org.openqa.selenium.Alert;
@@ -19,7 +20,7 @@ public class AddressesPage {
 	WebElement homePhoneField;
 	WebElement addressTitleField;
 	WebElement saveButton;
-	WebElement addressTwoLabel;
+	List <WebElement> addressTwoLabel;
 	WebElement updateButton;
 	WebElement addressLabel;
 	WebElement deleteAddressButton;
@@ -65,10 +66,12 @@ public class AddressesPage {
 		return driver.findElement(By.id("submitAddress"));
 	}
 
-	public WebElement getAddressTwoLabel() {
-		return driver.findElement(By.xpath("//div[@class='addresses']/div/div[2]/ul/li/h3"));
+	
+	public List<WebElement> getAddressTwoLabel() {
+		return driver.findElements(By.xpath("//div[@class='addresses']/div/div[2]/ul/li/h3"));
 	}
 
+	//"//div[@class='addresses']/div/div[2]/ul/li/h3"
 	public WebElement getUpdateButton() {
 		return driver.findElement(By.xpath("//*[@id=\"center_column\"]/div[1]/div/div/ul/li[9]/a[1]"));
 	}
@@ -123,12 +126,6 @@ public class AddressesPage {
 		this.getSaveButton().click();
 	}
 
-	public void updateAddress(String oldAddress) throws InterruptedException {
-		this.getAddressField().clear();
-		Thread.sleep(2000);
-		this.inputAddress(oldAddress);
-		this.saveButtonClick();
-	}
 
 	public void deleteAddressButtonClick() {
 		this.getDeleteAddressButton().click();
@@ -138,14 +135,7 @@ public class AddressesPage {
 		Alert alert = driver.switchTo().alert();
 		alert.accept();
 	}
-	public void assertAddressTwoPresent() {
-		List<WebElement> dynamicElement = driver.findElements(By.cssSelector("ul.last_item"));
-		if(dynamicElement.size() != 0){
-			 System.out.println("Element present");
-			}
-			else{
-			 System.out.println("Element not present");
-			}
-	}
+	
 	
 }
+

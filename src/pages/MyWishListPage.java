@@ -1,6 +1,6 @@
 package pages;
 
-
+import java.util.List;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -13,6 +13,7 @@ public class MyWishListPage {
 	WebElement wishlistNameField;
 	WebElement saveButton;
 	WebElement deleteButton;
+	List<WebElement> wishTable;
 
 	public MyWishListPage(WebDriver driver) {
 		super();
@@ -35,6 +36,10 @@ public class MyWishListPage {
 		return driver.findElement(By.className("icon-remove"));
 	}
 
+	public List<WebElement> getWishTable() {
+		return driver.findElements(By.xpath("//tr[starts-with(@id ,'wishlist')]"));
+	}
+
 	public void inputWishlistName(String wishlistName) {
 		this.getWishlistNameField().clear();
 		this.getWishlistNameField().sendKeys(wishlistName);
@@ -51,10 +56,12 @@ public class MyWishListPage {
 		this.getDeleteButton().click();
 	}
 
-	
-
 	public void alertMessage() {
 		Alert alert = driver.switchTo().alert();
 		alert.accept();
 	}
+	public int wishListSize() {
+		return this.getWishTable().size();
+	}
+
 }

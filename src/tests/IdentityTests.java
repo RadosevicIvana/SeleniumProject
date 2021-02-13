@@ -1,6 +1,5 @@
 package tests;
 
-
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -8,7 +7,6 @@ import org.testng.annotations.Test;
 
 public class IdentityTests extends TestBase {
 
-	
 	@BeforeMethod
 	public void setup() {
 
@@ -17,56 +15,38 @@ public class IdentityTests extends TestBase {
 		String password = excelReader.getData("Login", 4, 9);
 		logIn(email, password);
 	}
-	
-	@Test (priority = 0)
+
+	@Test(priority = 0)
 	public void editPersonalInformation() {
-		editPersonal();
-		
-		/*myAccountPage.myPersonalInformationTabClick();
-		String newLastName = excelReader.getData("TC3", 4, 5);
-		String currentPassword = excelReader.getData("TC3", 4, 6);
+
+		myAccountPage.myPersonalInformationTabClick();
+		String newLastName = excelReader.getData("MyPersonalInformation", 4, 5);
+		String currentPassword = excelReader.getData("Login", 4, 9);
 		identityPage.inputLastName(newLastName);
 		identityPage.inputCurrentPassword(currentPassword);
 		identityPage.saveButtonClick();
 		Assert.assertEquals(true, identityPage.getSuccessfulEditLabel().isDisplayed());
-		excelReader.asserting("TC3", 5, 7, identityPage.getProfileName().getText());*/
-		
-		
+		excelReader.asserting("MyPersonalInformation", 5, 7, identityPage.getProfileName().getText());
+		returnToPreviousLastName();
+
 	}
-	public void editPersonal() {
-		String profileName = identityPage.getProfileName().getText();
-		switch (profileName) {
-		case "Sandy Bell": {
-			myAccountPage.myPersonalInformationTabClick();
-			String newLastName = excelReader.getData("MyPersonalInformation", 4, 5);
-			String currentPassword = excelReader.getData("Login", 4, 9);
-			identityPage.inputLastName(newLastName);
-			identityPage.inputCurrentPassword(currentPassword);
-			identityPage.saveButtonClick();
-			Assert.assertEquals(true, identityPage.getSuccessfulEditLabel().isDisplayed());
-			excelReader.asserting("MyPersonalInformation", 5, 7, identityPage.getProfileName().getText());
-		}
-		break;
-		case "Sandy Maven": {
-			myAccountPage.myPersonalInformationTabClick();
-			String newLastName = excelReader.getData("MyPersonalInformation", 4, 4);
-			String currentPassword = excelReader.getData("Login", 4, 9);
-			identityPage.inputLastName(newLastName);
-			identityPage.inputCurrentPassword(currentPassword);
-			identityPage.saveButtonClick();
-			Assert.assertEquals(true, identityPage.getSuccessfulEditLabel().isDisplayed());
-			excelReader.asserting("MyPersonalInformation", 5, 4, identityPage.getProfileName().getText());
-		}
-		break;
-		default:
-			System.out.println("Error. You are not signed in or the profile is not right");
-		}
-	}
-	
+
 	@AfterMethod
-	public void afterTest() throws InterruptedException {
+	public void afterTest() {
 		driver.manage().deleteAllCookies();
 		driver.navigate().refresh();
 
+	}
+
+	public void returnToPreviousLastName() {
+		identityPage.backToMyAccountClick();
+		myAccountPage.myPersonalInformationTabClick();
+		String oldLastName = excelReader.getData("MyPersonalInformation", 4, 4);
+		String currentPassword = excelReader.getData("Login", 4, 9);
+		identityPage.inputLastName(oldLastName);
+		identityPage.inputCurrentPassword(currentPassword);
+		identityPage.saveButtonClick();
+		Assert.assertEquals(true, identityPage.getSuccessfulEditLabel().isDisplayed());
+		excelReader.asserting("MyPersonalInformation", 5, 4, identityPage.getProfileName().getText());
 	}
 }

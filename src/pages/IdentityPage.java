@@ -42,12 +42,14 @@ public class IdentityPage {
 		return driver.findElement(By.className("alert-success"));
 	}
 
-	public WebElement getBackToMyAccount() {
-		return driver.findElement(By.xpath("//*[@id=\"center_column\"]/ul/li[1]/a"));
-	}
 
 	public WebElement getProfileName() {
 		return driver.findElement(By.className("account"));
+	}
+	
+
+	public WebElement getBackToMyAccount() {
+		return driver.findElement(By.xpath("//*[@id=\"center_column\"]/ul/li[1]/a"));
 	}
 
 	public void inputLastName(String newLastName) {
@@ -61,6 +63,9 @@ public class IdentityPage {
 	}
 	public void saveButtonClick() {
 		this.getSaveButton().click();
+	}
+	public void backToMyAccountClick() {
+		this.getBackToMyAccount().click();
 	}
 	
 	
