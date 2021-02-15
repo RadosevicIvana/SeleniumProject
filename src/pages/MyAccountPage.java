@@ -19,6 +19,7 @@ public class MyAccountPage {
 	WebElement signInButton;
 	WebElement signOutButton;
 	WebElement credentialsWrongInput; 
+	WebElement homeButton;
 	 
 
 	public MyAccountPage(WebDriver driver) {
@@ -66,6 +67,11 @@ public class MyAccountPage {
 	public WebElement getMyWishListTab() {
 		return driver.findElement(By.xpath("//a[@title=\"My wishlists\"]"));
 	}
+	
+
+	public WebElement getHomeButton() {
+		return driver.findElement(By.xpath("//a[@title='Home']"));
+	}
 
 	public void loginInput(String email, String password) {
 		this.getEmailField().clear();
@@ -97,5 +103,8 @@ public class MyAccountPage {
 	}
 	public void myWishListTabClick() {
 		this.getMyWishListTab().click();
+	}
+	public void homeButtonClick() {
+		this.getHomeButton().click();
 	}
 }

@@ -15,6 +15,7 @@ import pages.HomePage;
 import pages.IdentityPage;
 import pages.MyAccountPage;
 import pages.MyWishListPage;
+import pages.OrderPage;
 
 public class TestBase {
 
@@ -28,6 +29,7 @@ public class TestBase {
 	AddressesPage addressesPage;
 	IdentityPage identityPage;
 	MyWishListPage myWishlistPage;
+	OrderPage orderPage;
 
 	public void logIn(String email, String password) {
 		homePage.signInClick();
@@ -47,6 +49,7 @@ public class TestBase {
 		this.identityPage = new IdentityPage(driver);
 		this.myWishlistPage = new MyWishListPage(driver);
 		this.waiter = new WebDriverWait(driver, 40);
+		this.orderPage = new OrderPage(driver);
 
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
